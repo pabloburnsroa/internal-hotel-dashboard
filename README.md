@@ -52,7 +52,7 @@ TBC
 - Form management: [React Hook Form](https://www.react-hook-form.com/)
 
 ## Installation
-TBC
+
 
 ## Tests
 TBC
