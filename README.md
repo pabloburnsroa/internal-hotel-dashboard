@@ -50,12 +50,34 @@ TBC
 - State management: React Query ([TanStack](https://tanstack.com/query/latest/docs/react/overview))
 - UI state management: Context API
 - Form management: [React Hook Form](https://www.react-hook-form.com/)
+- Database: Postgres database [supabase](https://supabase.com/)
 
 ## Installation
 
-
 ## Tests
 TBC
+
+## Modeling The App State Using Supabase (PostgresDB)
+1. Bookings - each booking will need guest and room info (use foreign keys to connect tables together in PostgresDB)
+2. Rooms - each room will need guest and booking info
+3. Guests
+4. Settings
+5. Users 
+
+- All of the 5 will be stored in supabase as global remote state - one table for each state slice in the DB
+- Managed on the front-end using ReactQuery
+
+## Connecting The App with Our Supabase DB
+```
+npm install @supabase/supabase-js
+
+
+import { createClient } from '@supabase/supabase-js'
+
+// Create a single supabase client for interacting with your database
+const supabase = createClient('https://xyzcompany.supabase.co', 'public-anon-key')
+
+```
 
 ### How to Use?
 TBC
