@@ -17,7 +17,7 @@ const NavList = styled.ul`
 const StyledNavLink = styled(NavLink)`
   &:link,
   &:visited {
-    display: flex;
+    display: flex; 
     align-items: center;
     gap: 1.2rem;
 
@@ -34,7 +34,7 @@ const StyledNavLink = styled(NavLink)`
   &.active:link,
   &.active:visited {
     color: var(--color-grey-800);
-    background-color: var(--color-grey-50);
+    background-color: var(--color-grey-200);
     border-radius: var(--border-radius-sm);
   }
 
@@ -70,9 +70,9 @@ function MainNav() {
           </StyledNavLink>
         </li>
         <li>
-          <StyledNavLink to="/cabins">
+          <StyledNavLink to="/rooms">
             <HiOutlineHomeModern />
-            <span>Cabins</span>
+            <span>Rooms</span>
           </StyledNavLink>
         </li>
         <li>
