@@ -78,6 +78,20 @@ import { createClient } from '@supabase/supabase-js'
 const supabase = createClient('https://xyzcompany.supabase.co', 'public-anon-key')
 
 ```
+### Using TanStack Query (FKA React Query)
+[TanStack Docs](https://tanstack.com/query/guides/getting-started#installation)
+#### Why use TanStack Query?
+- Aysnchronous state management
+- Declarative, handles caching, background updates
+- Pre-fetching data
+- Automatic re-fetching to keep state synched
+- Offline support (User can use cached data)
+- Required as remote state is different from 'regular' UI state - out-of-sync
+
+### Installing TanStack Query
+```
+npm i @tanstack/react-query
+```
 
 ### How to Use?
 TBC
