@@ -1,7 +1,9 @@
 import styled from "styled-components";
 import { formatCurrency } from "../../../utils/helpers";
-import { HiTrash } from "react-icons/hi2";
+import { HiTrash, HiPencil } from "react-icons/hi2";
 import { useDeleteRoom } from "../hooks/useRooms";
+import { useState } from "react";
+import CreateRoomForm from "./CreateRoomForm";
 
 const TableRow = styled.div`
   display: grid;
@@ -43,6 +45,7 @@ const Discount = styled.div`
 `;
 
 function RoomRow({ room }) {
+  const [editForm, setEditForm] = useState(false);
   const { isDeleting, deleteRoom } = useDeleteRoom();
   const {
     id: roomId,
@@ -62,10 +65,16 @@ function RoomRow({ room }) {
         <div>Fits up to {max_capacity} guests</div>
         <Price>{formatCurrency(price)}</Price>
         <Discount>{formatCurrency(discount)}</Discount>
-        <button onClick={() => deleteRoom(roomId)} disabled={isDeleting}>
-          <HiTrash />
-        </button>
+        <div>
+          <button onClick={() => setEditForm(()=> !editForm)} disabled={isDeleting}>
+            <HiPencil />
+          </button>
+          <button onClick={() => deleteRoom(roomId)} disabled={isDeleting}>
+            <HiTrash />
+          </button>
+        </div>
       </TableRow>
+      {editForm && <CreateRoomForm roomToEdit={room}/>}
     </>
   );
 }

@@ -99,4 +99,11 @@ TBC
 ### Credits
 - Folder structure: [Web Dev Simplified](https://blog.webdevsimplified.com/2022-07/react-folder-structure/)
 
+
+### Additional Packages 
+- [React Icons](https://www.npmjs.com/package/@iconscout/react-unicons): For icons
+- [React Hot Toast](https://react-hot-toast.com/) 
+- [React-Hook-Form](https://react-hook-form.com/get-started)
+
+
 ### License

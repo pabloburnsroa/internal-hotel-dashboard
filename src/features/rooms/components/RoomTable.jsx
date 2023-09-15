@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import styled from "styled-components";
-import { useRooms } from "../hooks/useRooms";
+import { useGetRooms } from "../hooks/useRooms";
 import Spinner from "../../../components/ui/Spinner";
 import RoomRow from "./RoomRow";
 
@@ -29,7 +29,7 @@ const TableHeader = styled.header`
 `;
 
 function RoomTable() {
-  const { isLoading, rooms, error } = useRooms();
+  const { isLoading, rooms, error } = useGetRooms();
   // console.log({isLoading, rooms, error})
 
   if (isLoading) return <Spinner />;
