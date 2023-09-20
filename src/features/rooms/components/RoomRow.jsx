@@ -4,6 +4,9 @@ import { HiTrash, HiPencil } from "react-icons/hi2";
 import { useDeleteRoom } from "../hooks/useRooms";
 import { useState } from "react";
 import CreateRoomForm from "./CreateRoomForm";
+import Modal from "../../../components/ui/Modal";
+import Button from "../../../components/ui/Button";
+import ConfirmDelete from "../../../components/ui/ConfirmDelete";
 
 const TableRow = styled.div`
   display: grid;
@@ -66,15 +69,36 @@ function RoomRow({ room }) {
         <Price>{formatCurrency(price)}</Price>
         <Discount>{formatCurrency(discount)}</Discount>
         <div>
-          <button onClick={() => setEditForm(()=> !editForm)} disabled={isDeleting}>
+          <button
+            onClick={() => setEditForm(() => !editForm)}
+            disabled={isDeleting}
+          >
             <HiPencil />
           </button>
-          <button onClick={() => deleteRoom(roomId)} disabled={isDeleting}>
+
+          {/* <button onClick={() => deleteRoom(roomId)} disabled={isDeleting}>
             <HiTrash />
-          </button>
+          </button> */}
+
+          <Modal>
+            <Modal.Open
+              opens="delete"
+              renderButton={(open) => (
+                <button onClick={open}>
+                  <HiTrash />
+                </button>
+              )}
+            ></Modal.Open>
+            <Modal.Window name="delete">
+              <ConfirmDelete
+                disabled={isDeleting}
+                onConfirm={() => deleteRoom(roomId)}
+              />
+            </Modal.Window>
+          </Modal>
         </div>
       </TableRow>
-      {editForm && <CreateRoomForm roomToEdit={room}/>}
+      {editForm && <CreateRoomForm roomToEdit={room} />}
     </>
   );
 }

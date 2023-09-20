@@ -7,12 +7,13 @@ import Input from "../../../components/ui/Input";
 import { Textarea } from "../../../components/ui/Textarea";
 import { useCreateRoom, useEditRoom } from "../hooks/useRooms";
 
-function CreateRoomForm({ roomToEdit = {} }) {
+function CreateRoomForm({ roomToEdit = {}, onCloseModal }) {
   const { id: editId, ...editValues } = roomToEdit;
   const isEdit = Boolean(editId);
   const {
     register,
     getValues,
+    reset,
     handleSubmit,
     formState: { errors },
   } = useForm({
@@ -21,18 +22,42 @@ function CreateRoomForm({ roomToEdit = {} }) {
 
   const { isCreating, createRoom } = useCreateRoom();
   const { isEditing, editRoom } = useEditRoom();
-  const isLoading = isCreating || isEditing
+  const isLoading = isCreating || isEditing;
 
   function onSubmit(data) {
-    // console.log(data)
-    createRoom({ ...data, image: data.image[0] });
+    const image = typeof data.image === "string" ? data.image : data.image[0];
+
+    if (isEdit) {
+      editRoom(
+        { newRoomData: { ...data, image }, id: editId },
+        {
+          onSuccess: (data) => {
+            reset();
+            onCloseModal?.();
+          },
+        }
+      );
+    } else {
+      createRoom(
+        { ...data, image: image },
+        {
+          onSuccess: (data) => {
+            reset();
+            onCloseModal?.();
+          },
+        }
+      );
+    }
   }
 
   function onError(err) {
     console.error(err);
   }
   return (
-    <Form onSubmit={handleSubmit(onSubmit, onError)}>
+    <Form
+      onSubmit={handleSubmit(onSubmit, onError)}
+      type={onCloseModal ? "modal" : ""}
+    >
       <FormRow label="Room name" error={errors?.name?.message}>
         <Input
           type="text"
@@ -48,7 +73,7 @@ function CreateRoomForm({ roomToEdit = {} }) {
         <Input
           type="number"
           id="max_capacity"
-            disabled={isLoading}
+          disabled={isLoading}
           {...register("max_capacity", {
             required: "This field is required",
             min: {
@@ -63,7 +88,7 @@ function CreateRoomForm({ roomToEdit = {} }) {
         <Input
           type="number"
           id="price"
-            disabled={isLoading}
+          disabled={isLoading}
           {...register("price", {
             required: "This field is required",
             min: {
@@ -78,7 +103,7 @@ function CreateRoomForm({ roomToEdit = {} }) {
         <Input
           type="number"
           id="discount"
-            disabled={isLoading}
+          disabled={isLoading}
           defaultValue={0}
           {...register("discount", {
             required: "This field is required",
@@ -98,7 +123,7 @@ function CreateRoomForm({ roomToEdit = {} }) {
           type="number"
           id="description"
           defaultValue=""
-            disabled={isLoading}
+          disabled={isLoading}
           {...register("description", {
             required: "This field is required",
           })}
@@ -120,9 +145,7 @@ function CreateRoomForm({ roomToEdit = {} }) {
         <Button
           variation="secondary"
           type="reset"
-          onClick={() => {
-            () => isEdit(false);
-          }}
+          onClick={() => onCloseModal?.()}
         >
           Cancel
         </Button>
