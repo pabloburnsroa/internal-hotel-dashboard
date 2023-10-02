@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import { HiChevronRight, HiChevronLeft } from "react-icons/hi2";
+import { useSearchParams } from "react-router-dom";
 
 const StyledPagination = styled.div`
   width: 100%;
@@ -55,3 +57,61 @@ const PaginationButton = styled.button`
     color: var(--color-brand-50);
   }
 `;
+
+// "Magic Number"
+const RESULTS_PER_PAGE = 10;
+
+/* 
+Pagination component should receive the number of results - count
+Create event handler for each button
+Get current page from the URL - searchParams.get('page')
+Get page count - count / number of results per page
+*/
+export default function Pagination({ count }) {
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const currentPage = !searchParams.get("page")
+    ? 1
+    : Number(searchParams.get("page"));
+
+  const pageCount = Math.ceil(count / RESULTS_PER_PAGE);
+
+  function setPageParams(value) {
+    searchParams.set("page", value);
+    setSearchParams(searchParams);
+  }
+
+  function nextPage() {
+    const next = currentPage === pageCount ? currentPage : currentPage + 1;
+    setPageParams(next);
+  }
+  function prevPage() {
+    const prev = currentPage === 1 ? currentPage : currentPage - 1;
+    setPageParams(prev);
+  }
+
+  return (
+    <StyledPagination>
+      <P>
+        Showing <span>{(currentPage - 1) * RESULTS_PER_PAGE + 1} </span>to{" "}
+        <span>
+          {currentPage === pageCount
+            ? count
+            : currentPage * RESULTS_PER_PAGE}{" "}
+        </span>
+        of <span>{count}</span> results
+      </P>
+      <Buttons>
+        <PaginationButton onClick={prevPage} disabled={currentPage === 1}>
+          <HiChevronLeft /> <span> Previous</span>
+        </PaginationButton>
+        <PaginationButton
+          onClick={nextPage}
+          disabled={currentPage === pageCount}
+        >
+          <HiChevronRight /> <span> Next</span>
+        </PaginationButton>
+      </Buttons>
+    </StyledPagination>
+  );
+}
