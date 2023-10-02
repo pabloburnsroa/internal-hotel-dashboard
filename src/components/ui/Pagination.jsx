@@ -90,14 +90,16 @@ export default function Pagination({ count }) {
     setPageParams(prev);
   }
 
+  // Do not return Pagination if only one page of results
+  if (pageCount <= 1) return null;
+
+  // return
   return (
     <StyledPagination>
       <P>
         Showing <span>{(currentPage - 1) * RESULTS_PER_PAGE + 1} </span>to{" "}
         <span>
-          {currentPage === pageCount
-            ? count
-            : currentPage * RESULTS_PER_PAGE}{" "}
+          {currentPage === pageCount ? count : currentPage * RESULTS_PER_PAGE}{" "}
         </span>
         of <span>{count}</span> results
       </P>
