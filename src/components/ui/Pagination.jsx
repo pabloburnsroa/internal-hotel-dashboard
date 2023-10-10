@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { HiChevronRight, HiChevronLeft } from "react-icons/hi2";
 import { useSearchParams } from "react-router-dom";
+import { RESULTS_PER_PAGE } from "../../utils/constants";
 
 const StyledPagination = styled.div`
   width: 100%;
@@ -57,9 +58,6 @@ const PaginationButton = styled.button`
     color: var(--color-brand-50);
   }
 `;
-
-// "Magic Number"
-const RESULTS_PER_PAGE = 10;
 
 /* 
 Pagination component should receive the number of results - count
