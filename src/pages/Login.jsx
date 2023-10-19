@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import Heading from "../components/ui/Heading"
+import Heading from "../components/ui/Heading";
 import LoginForm from "../features/authentication/components/LoginForm";
 
 
@@ -17,8 +17,9 @@ function Login() {
   return (
     <LoginLayout>
       <Heading as="h4">Log in to your account</Heading>
-      <LoginForm/>
+      <LoginForm />
+     
     </LoginLayout>
-  )
+  );
 }
-export default Login
+export default Login;

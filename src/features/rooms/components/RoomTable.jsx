@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useGetRooms } from "../hooks/useRooms";
 import Spinner from "../../../components/ui/Spinner";
 import RoomRow from "./RoomRow";
+import Empty from "../../../components/ui/Empty";
 
 const Table = styled.div`
   border: 1px solid var(--color-grey-200);
@@ -33,6 +34,7 @@ function RoomTable() {
   // console.log({isLoading, rooms, error})
 
   if (isLoading) return <Spinner />;
+  if (!rooms.length) return <Empty resource="rooms"/>
   return (
     <Table role="table">
       <TableHeader role="row">
